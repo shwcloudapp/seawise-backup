@@ -1,91 +1,91 @@
-🎉 Seawise Backup Dashboard foi instalado com sucesso!
+🎉 Seawise Backup Dashboard installed successfully!
 
 📦 Release: {{ .Release.Name }}
 🔖 Namespace: {{ include "seawise-dashboard.namespace" . }}
-🏷️  Versão: {{ .Chart.AppVersion }}
+🏷️  Version: {{ .Chart.AppVersion }}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📋 INFORMAÇÕES DA INSTALAÇÃO:
+📋 INSTALLATION INFO:
 
-1. Verificar status do deployment:
+1. Check deployment status:
 
    kubectl get deployment -n {{ include "seawise-dashboard.namespace" . }}
 
-2. Verificar pods:
+2. Check pods:
 
    kubectl get pods -n {{ include "seawise-dashboard.namespace" . }} -l app.kubernetes.io/name={{ include "seawise-dashboard.name" . }}
 
-3. Ver logs:
+3. View logs:
 
    kubectl logs -n {{ include "seawise-dashboard.namespace" . }} -l app.kubernetes.io/name={{ include "seawise-dashboard.name" . }} -f
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌐 COMO ACESSAR O DASHBOARD:
+🌐 HOW TO ACCESS THE DASHBOARD:
 
 {{- if .Values.ingress.enabled }}
 {{- range .Values.ingress.hosts }}
-  ✅ Ingress habilitado: https://{{ .host }}
+  ✅ Ingress enabled: https://{{ .host }}
 {{- end }}
 {{- else if .Values.route.enabled }}
-  ✅ OpenShift Route habilitado.
+  ✅ OpenShift Route enabled.
 
-  Obtenha a URL com:
+  Get the URL with:
   {{- if eq .Capabilities.KubeVersion.Major "1" }}
   kubectl get route -n {{ include "seawise-dashboard.namespace" . }} {{ include "seawise-dashboard.fullname" . }}
   {{- else }}
   oc get route -n {{ include "seawise-dashboard.namespace" . }} {{ include "seawise-dashboard.fullname" . }}
   {{- end }}
 {{- else }}
-  ℹ️  Ingress/Route não habilitado. Use port-forward para acessar:
+  ℹ️  Ingress/Route not enabled. Use port-forward to access:
 
   kubectl port-forward -n {{ include "seawise-dashboard.namespace" . }} svc/{{ include "seawise-dashboard.fullname" . }} 8080:{{ .Values.service.port }}
 
-  Acesse: http://localhost:8080
+  Access: http://localhost:8080
 {{- end }}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚙️  CONFIGURAÇÃO:
+⚙️  CONFIGURATION:
 
-• Velero Namespace: {{ .Values.app.veleroNamespace | default "auto-detectado" }}
+• Velero Namespace: {{ .Values.app.veleroNamespace | default "auto-detected" }}
 • Timezone: {{ .Values.app.timezone }}
-• Persistência: {{ if .Values.persistence.enabled }}✅ Habilitada ({{ .Values.persistence.size }}){{ else }}❌ Desabilitada{{ end }}
-• RBAC: {{ if .Values.rbac.create }}✅ Criado{{ else }}❌ Não criado{{ end }}
+• Persistence: {{ if .Values.persistence.enabled }}✅ Enabled ({{ .Values.persistence.size }}){{ else }}❌ Disabled{{ end }}
+• RBAC: {{ if .Values.rbac.create }}✅ Created{{ else }}❌ Not created{{ end }}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔐 PRÓXIMOS PASSOS:
+🔐 NEXT STEPS:
 
-1. Aguarde o pod estar em estado Running:
+1. Wait for pod to be Running:
 
    kubectl wait --for=condition=ready pod -n {{ include "seawise-dashboard.namespace" . }} -l app.kubernetes.io/name={{ include "seawise-dashboard.name" . }} --timeout=300s
 
-2. Acesse o dashboard (veja seção "COMO ACESSAR" acima)
+2. Access the dashboard (see "HOW TO ACCESS" section above)
 
-3. No primeiro acesso, você será redirecionado para o Setup:
-   - Configure o namespace do Velero (se necessário)
-   - Crie o primeiro usuário administrador
-   - Configure preferências
+3. On first access, you'll be redirected to Setup:
+   - Configure Velero namespace (if needed)
+   - Create first admin user
+   - Configure preferences
 
-4. Faça login com as credenciais criadas
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📚 DOCUMENTAÇÃO:
-
-• README: https://github.com/shwcloudapp/seawise-backup/blob/main/helm-chart/seawise-dashboard/README.md
-• Guia de Instalação: https://github.com/shwcloudapp/seawise-backup/blob/main/helm-chart/seawise-dashboard/INSTALL.md
-• Instalação Velero: https://github.com/shwcloudapp/seawise-backup/blob/main/docs/instalacao_velero_completa.md
+4. Login with the credentials you created
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🆘 PRECISA DE AJUDA?
+📚 DOCUMENTATION:
+
+• Installation Guide: https://github.com/shwcloudapp/seawise-backup/blob/main/INSTALL.md
+• Rancher Guide: https://github.com/shwcloudapp/seawise-backup/blob/main/RANCHER-INSTALL.md
+• OpenShift Guide: https://github.com/shwcloudapp/seawise-backup/blob/main/OPENSHIFT-INSTALL.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆘 NEED HELP?
 
 • GitHub Issues: https://github.com/shwcloudapp/seawise-backup/issues
-• Troubleshooting: Consulte INSTALL.md seção "Troubleshooting"
+• Troubleshooting: Check installation guides above
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🚀 Bom uso do Seawise Backup Dashboard!
+🚀 Happy backing up with Seawise!
