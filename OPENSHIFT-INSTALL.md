@@ -67,9 +67,7 @@ resources:
     memory: 512Mi
 
 podSecurityContext:
-  fsGroup: 1001
   runAsNonRoot: true
-  runAsUser: 1001
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -78,7 +76,6 @@ securityContext:
     - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1001
 YAML
 ```
 
@@ -297,29 +294,37 @@ helm install seawise-dashboard \
 
 ### 5. Security Context Constraints (SCC) Issues
 
-OpenShift has strict security policies. The chart uses:
-- `runAsUser: 1001`
-- `runAsNonRoot: true`
+OpenShift has strict security policies. The chart is configured to work with the default `restricted-v2` SCC by:
+- **NOT specifying** `runAsUser` or `fsGroup` (OpenShift manages this automatically)
+- Using `runAsNonRoot: true`
 - No privileged containers
 
-If you get SCC errors:
+**The chart should work out-of-the-box with OpenShift's default SCC!**
+
+If you still get SCC errors:
 
 ```bash
-# Check SCC
-oc get scc
+# Check which SCC is being used
+oc describe pod -n seawise-app -l app.kubernetes.io/name=seawise-dashboard | grep scc
 
-# Describe pod to see SCC errors
-oc describe pod -n seawise-app -l app.kubernetes.io/name=seawise-dashboard
+# Check available SCCs
+oc get scc
 ```
 
-The default `restricted-v2` SCC should work. If not, you may need to adjust:
+**Solution:** The Helm chart v1.5.4+ is already configured correctly for OpenShift. Just make sure you're NOT specifying `runAsUser` or `fsGroup` in your values file.
+
+If upgrading from an older version:
 
 ```bash
-# Option 1: Use anyuid SCC (not recommended for production)
-oc adm policy add-scc-to-user anyuid -z seawise-dashboard -n seawise-app
+# Uninstall old version
+helm uninstall seawise-dashboard -n seawise-app
 
-# Option 2: Adjust runAsUser in values
-# Edit openshift-values.yaml and remove or adjust runAsUser
+# Reinstall with correct SCC settings
+helm install seawise-dashboard \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.4/seawise-dashboard-1.5.4.tgz \
+  --namespace seawise-app \
+  --create-namespace \
+  -f openshift-values.yaml
 ```
 
 ---
@@ -392,9 +397,7 @@ resources:
     cpu: 500m
     memory: 512Mi
 podSecurityContext:
-  fsGroup: 1001
   runAsNonRoot: true
-  runAsUser: 1001
 securityContext:
   allowPrivilegeEscalation: false
   capabilities:
@@ -402,7 +405,6 @@ securityContext:
     - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1001
 YAML
 
 # 2. EDIT storage class if needed

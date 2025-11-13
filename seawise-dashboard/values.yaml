@@ -67,9 +67,9 @@ podLabels: {}
 
 # Pod security context
 podSecurityContext:
-  fsGroup: 1001
+  # fsGroup: 1001  # Uncomment for non-OpenShift environments if needed
   runAsNonRoot: true
-  runAsUser: 1001
+  # runAsUser: 1001  # Uncomment for non-OpenShift environments if needed
 
 # Container security context
 securityContext:
@@ -79,7 +79,7 @@ securityContext:
     - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1001
+  # runAsUser: 1001  # Uncomment for non-OpenShift environments if needed
 
 # ============================================================================
 # RESOURCES

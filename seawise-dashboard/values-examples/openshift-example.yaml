@@ -49,11 +49,10 @@ resources:
     memory: 512Mi
 
 # OpenShift has SCCs (Security Context Constraints)
-# Adjust if necessary according to your policies
+# Let OpenShift manage the UID/GID automatically based on namespace ranges
+# Do NOT specify runAsUser/fsGroup for OpenShift!
 podSecurityContext:
-  fsGroup: 1001
   runAsNonRoot: true
-  runAsUser: 1001
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -62,4 +61,3 @@ securityContext:
     - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1001
