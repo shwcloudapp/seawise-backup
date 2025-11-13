@@ -1,0 +1,57 @@
+# ============================================================================
+# EXEMPLO: Instalação no Rancher com NGINX Ingress Controller
+# ============================================================================
+# Use este arquivo se o seu Rancher usa NGINX ao invés de Traefik
+
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+
+app:
+  # Namespace onde o Velero está instalado (comum no Rancher)
+  veleroNamespace: "velero"
+
+  # Timezone - ajuste conforme sua localização
+  timezone: "America/Sao_Paulo"
+
+  # IMPORTANTE: Gere uma chave secreta em produção!
+  # openssl rand -hex 32
+  secretKey: ""
+
+persistence:
+  enabled: true
+  # Storage class padrão do Rancher
+  storageClassName: "local-path"
+  size: 1Gi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # Descomente se usar cert-manager:
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: seawise-backup.192.168.100.97.sslip.io  # ALTERE: Use o IP do seu cluster
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - seawise-backup.192.168.100.97.sslip.io  # Mesmo host acima
+      # secretName: seawise-tls  # Descomente se usar cert-manager
+  # Para usar domínio próprio com cert-manager:
+  # tls:
+  #   - secretName: seawise-tls
+  #     hosts:
+  #       - seawise.seu-dominio.com
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

@@ -1,90 +1,44 @@
-# 🚀 Instalação no Rancher - Guia Rápido
+# 🚀 Instalação no Rancher - Guia Simplificado
 
-Guia específico para instalar o Seawise Dashboard em clusters Rancher com Traefik.
-
----
-
-## ✅ Pré-requisitos
-
-- Cluster Rancher (RKE/RKE2) funcionando
-- Velero instalado no namespace `velero`
-- Acesso kubectl configurado
+Guia rápido e fácil para instalar o Seawise Dashboard em clusters Rancher.
 
 ---
 
-## 🎯 Instalação Rápida (Método 1 - Recomendado)
+## ✅ Antes de Começar
 
-### 1. Descubra o IP do seu cluster
+Você precisa ter:
+- ✅ Cluster Rancher funcionando (RKE/RKE2/K3s)
+- ✅ Velero instalado (geralmente no namespace `velero`)
+- ✅ Acesso kubectl ou oc configurado
+
+---
+
+## 🎯 Instalação em 3 Passos
+
+### Passo 1: Descobrir o IP do Cluster
 
 ```bash
-# Método 1: Ver IP do load balancer
-kubectl get svc -n kube-system traefik
-
-# Método 2: Ver IP de um node
 kubectl get nodes -o wide
 ```
 
-Anote o IP (exemplo: `192.168.100.97`)
-
-### 2. Instalar com um único comando
-
-```bash
-# ALTERE O IP ABAIXO para o IP do seu cluster!
-export CLUSTER_IP="192.168.100.97"
-
-helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
-  --namespace seawise-app \
-  --create-namespace \
-  --set ingress.enabled=true \
-  --set ingress.annotations."kubernetes\.io/ingress\.allow-http"="false" \
-  --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="web,websecure" \
-  --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
-  --set ingress.hosts[0].host="seawise-backup.${CLUSTER_IP}.sslip.io" \
-  --set ingress.hosts[0].paths[0].path="/" \
-  --set ingress.hosts[0].paths[0].pathType="Prefix" \
-  --set-string ingress.tls[0].hosts[0]="seawise-backup.${CLUSTER_IP}.sslip.io" \
-  --set persistence.storageClassName="local-path"
-```
-
-### 3. Aguardar o pod iniciar
-
-```bash
-# Ver status
-kubectl get pods -n seawise-app -w
-
-# Aguarde até aparecer: Running (pode demorar 1-2 minutos)
-```
-
-### 4. Obter a URL de acesso
-
-```bash
-kubectl get ingress -n seawise-app seawise-dashboard
-```
-
-**URL de acesso:**
-```
-https://seawise-backup.192.168.100.97.sslip.io
-```
-
-Abra no navegador! 🎉
+Anote o **IP INTERNO** de qualquer node (exemplo: `192.168.100.97`)
 
 ---
 
-## 🎯 Instalação com Arquivo de Valores (Método 2)
+### Passo 2: Criar Arquivo de Configuração
 
-### 1. Criar arquivo `rancher-values.yaml`
+**Copie e cole este comando** (vai criar o arquivo automaticamente):
 
 ```bash
-cat > rancher-values.yaml <<EOF
+cat > rancher-values.yaml <<'YAML'
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+
 app:
   veleroNamespace: "velero"
   timezone: "America/Sao_Paulo"
-
-persistence:
-  enabled: true
-  storageClassName: "local-path"
-  size: 1Gi
 
 ingress:
   enabled: true
@@ -94,13 +48,18 @@ ingress:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
   hosts:
-    - host: seawise-backup.192.168.100.97.sslip.io  # ALTERE ESTE IP!
+    - host: seawise-backup.192.168.100.97.sslip.io
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - seawise-backup.192.168.100.97.sslip.io  # ALTERE ESTE IP!
+        - seawise-backup.192.168.100.97.sslip.io
+
+persistence:
+  enabled: true
+  storageClassName: "local-path"
+  size: 1Gi
 
 resources:
   requests:
@@ -109,184 +68,246 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
-EOF
+YAML
 ```
 
-**⚠️ IMPORTANTE:** Edite o arquivo e altere os dois IPs (linhas 16 e 21) para o IP do seu cluster!
+**Agora edite o IP:**
 
-### 2. Instalar
+```bash
+# Substitua 192.168.100.97 pelo IP do seu cluster
+sed -i 's/192.168.100.97/SEU_IP_AQUI/g' rancher-values.yaml
+
+# Ou edite manualmente:
+nano rancher-values.yaml
+# Altere as linhas 18 e 23
+```
+
+---
+
+### Passo 3: Instalar
 
 ```bash
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f rancher-values.yaml
 ```
 
+**Pronto!** Aguarde 1-2 minutos e acesse:
+
+```
+https://seawise-backup.SEU-IP.sslip.io
+```
+
 ---
 
-## 🔍 Verificar Instalação
+## 🔍 Verificar se Funcionou
 
 ```bash
-# Ver todos os recursos
-kubectl get all -n seawise-app
+# Ver se o pod está rodando
+kubectl get pods -n seawise-app
 
-# Ver Ingress (deve mostrar o host)
+# Ver o Ingress
 kubectl get ingress -n seawise-app
 
-# Ver logs
+# Ver logs (se necessário)
 kubectl logs -n seawise-app -l app.kubernetes.io/name=seawise-dashboard -f
-
-# Status do Helm
-helm status seawise-dashboard -n seawise-app
 ```
 
-**Saída esperada do Ingress:**
+**Saída esperada:**
+
 ```
-NAME                CLASS    HOSTS                                      ADDRESS   PORTS     AGE
-seawise-dashboard   <none>   seawise-backup.192.168.100.97.sslip.io              80, 443   2m
+NAME                                 READY   STATUS    RESTARTS   AGE
+seawise-dashboard-xxxxxxxxxx-xxxxx   1/1     Running   0          2m
+
+NAME                CLASS     HOSTS                                   PORTS     AGE
+seawise-dashboard   traefik   seawise-backup.192.168.100.97.sslip.io   80, 443   2m
 ```
 
 ---
 
-## 🌐 Acessar o Dashboard
+## 🌐 Se Você Usa NGINX ao Invés de Traefik
 
-### Via Ingress (URL externa)
-
-Acesse: `https://seawise-backup.SEU-IP.sslip.io`
-
-### Via Port Forward (alternativa)
+Se o seu Rancher usa NGINX Ingress Controller, use este arquivo:
 
 ```bash
-kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
+cat > rancher-nginx-values.yaml <<'YAML'
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
 
-# Acesse: http://localhost:8080
+app:
+  veleroNamespace: "velero"
+  timezone: "America/Sao_Paulo"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Se tiver cert-manager
+  hosts:
+    - host: seawise-backup.192.168.100.97.sslip.io
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - seawise-backup.192.168.100.97.sslip.io
+      # secretName: seawise-tls  # Descomente se usar cert-manager
+
+persistence:
+  enabled: true
+  storageClassName: "local-path"
+  size: 1Gi
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+YAML
+
+# Editar o IP
+sed -i 's/192.168.100.97/SEU_IP_AQUI/g' rancher-nginx-values.yaml
+
+# Instalar
+helm install seawise-dashboard \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  --namespace seawise-app \
+  --create-namespace \
+  -f rancher-nginx-values.yaml
 ```
 
 ---
 
 ## ⚙️ Configurações Comuns
 
-### Alterar o domínio após instalação
-
-```bash
-# Exemplo: mudar para outro IP
-helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
-  --namespace seawise-app \
-  --reuse-values \
-  --set ingress.hosts[0].host="seawise-backup.192.168.100.50.sslip.io" \
-  --set-string ingress.tls[0].hosts[0]="seawise-backup.192.168.100.50.sslip.io"
-```
-
-### Usar domínio próprio (sem sslip.io)
+### Alterar Timezone
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --reuse-values \
-  --set ingress.hosts[0].host="backup.meudominio.com" \
-  --set-string ingress.tls[0].hosts[0]="backup.meudominio.com"
+  --set app.timezone="America/New_York"
 ```
 
-### Habilitar cert-manager (HTTPS real)
+### Usar Domínio Próprio
+
+Se você tem um domínio (exemplo: `backup.minhaempresa.com`):
 
 ```bash
+# Editar o arquivo
+nano rancher-values.yaml
+
+# Alterar:
+# hosts:
+#   - host: backup.minhaempresa.com
+
+# Atualizar
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
-  --reuse-values \
-  --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
-  --set ingress.tls[0].secretName="seawise-tls" \
-  --set ingress.hosts[0].host="backup.meudominio.com" \
-  --set-string ingress.tls[0].hosts[0]="backup.meudominio.com"
+  -f rancher-values.yaml
 ```
 
-### Alterar namespace do Velero
+### Alterar Namespace do Velero
 
 Se o Velero estiver em outro namespace:
 
 ```bash
-# Descobrir namespace do Velero
+# Descobrir
 kubectl get deployment --all-namespaces | grep velero
 
 # Atualizar
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --reuse-values \
-  --set app.veleroNamespace="SEU-NAMESPACE"
+  --set app.veleroNamespace="cattle-velero"
 ```
 
 ---
 
-## 🐛 Troubleshooting
+## 🐛 Problemas Comuns
 
-### Problema 1: Ingress não aparece
-
-```bash
-# Verificar se o Ingress foi criado
-kubectl describe ingress -n seawise-app seawise-dashboard
-
-# Verificar Traefik
-kubectl get pods -n kube-system | grep traefik
-```
-
-**Solução:** Certifique-se de que `ingress.enabled=true` foi passado na instalação.
-
-### Problema 2: URL não funciona (404 ou timeout)
-
-```bash
-# Verificar se o service está funcionando
-kubectl get svc -n seawise-app
-kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
-
-# Se o port-forward funciona (http://localhost:8080), o problema é no Ingress
-```
-
-**Soluções:**
-1. Verifique o IP usado no sslip.io
-2. Teste o IP do cluster: `curl http://SEU-IP`
-3. Verifique regras de firewall
-
-### Problema 3: Pod não inicia (CrashLoopBackOff)
+### 1. Pod não inicia (CrashLoopBackOff)
 
 ```bash
 # Ver logs
 kubectl logs -n seawise-app -l app.kubernetes.io/name=seawise-dashboard
 
-# Ver eventos
-kubectl describe pod -n seawise-app -l app.kubernetes.io/name=seawise-dashboard
+# Verificar PVC
+kubectl get pvc -n seawise-app
 ```
 
-**Causas comuns:**
-- PVC não bound (verificar: `kubectl get pvc -n seawise-app`)
-- Storage class não existe (verificar: `kubectl get storageclass`)
-
-### Problema 4: "Velero not found" no Dashboard
+**Solução:** Geralmente é problema de storage. Verifique se a StorageClass existe:
 
 ```bash
-# Verificar namespace do Velero
+kubectl get storageclass
+```
+
+Se não tiver `local-path`, use outra (exemplo: `default`, `nfs-client`):
+
+```bash
+helm upgrade seawise-dashboard \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  --namespace seawise-app \
+  --reuse-values \
+  --set persistence.storageClassName="default"
+```
+
+---
+
+### 2. Ingress não aparece / URL não funciona
+
+```bash
+# Verificar qual Ingress Controller está instalado
+kubectl get pods -n kube-system | grep -E "traefik|nginx"
+
+# Verificar o Ingress criado
+kubectl describe ingress -n seawise-app seawise-dashboard
+```
+
+**Soluções:**
+
+- **Traefik não instalado?** Use a configuração NGINX acima
+- **IP errado?** Verifique o IP com `kubectl get nodes -o wide`
+- **Firewall?** Teste com port-forward: `kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80`
+
+---
+
+### 3. "Velero not found" no Dashboard
+
+```bash
+# Descobrir onde o Velero está
 kubectl get deployment --all-namespaces | grep velero
 
-# Se estiver em namespace diferente de "velero", atualize:
+# Se estiver em outro namespace, atualize:
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.veleroNamespace="NAMESPACE-CORRETO"
 ```
 
-### Problema 5: Certificado SSL inválido
+---
 
-Isso é normal com sslip.io! O Traefik gera um certificado autoassinado.
+### 4. Certificado SSL inválido
+
+Isso é **normal** com sslip.io! O Traefik gera certificado autoassinado.
 
 **Soluções:**
+
 1. **Aceite o certificado** no navegador (clique "Avançado" → "Continuar")
-2. **Use cert-manager** para certificados Let's Encrypt (veja seção acima)
-3. **Use port-forward** para teste sem SSL
+2. **Use cert-manager** para certificados Let's Encrypt reais
+3. **Use domínio próprio** com SSL configurado
 
 ---
 
@@ -294,7 +315,7 @@ Isso é normal com sslip.io! O Traefik gera um certificado autoassinado.
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.6.0/seawise-dashboard-1.6.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --reuse-values
 ```
@@ -307,7 +328,7 @@ helm upgrade seawise-dashboard \
 # Remover aplicação
 helm uninstall seawise-dashboard -n seawise-app
 
-# Remover PVC (CUIDADO: apaga dados!)
+# Remover dados (CUIDADO: apaga o banco!)
 kubectl delete pvc -n seawise-app seawise-dashboard-pvc
 
 # Remover namespace
@@ -316,39 +337,71 @@ kubectl delete namespace seawise-app
 
 ---
 
-## 📚 Links Úteis
+## 🆘 Precisa de Ajuda?
 
-- [Documentação Completa](README.md)
-- [Guia Geral de Instalação](USER-INSTALL-GUIDE.md)
-- [Troubleshooting Detalhado](seawise-dashboard/INSTALL.md)
-- [GitHub Releases](https://github.com/shwcloudapp/seawise-backup/releases)
+- 📖 [Documentação Completa](README.md)
+- 📖 [Guia Geral](USER-INSTALL-GUIDE.md)
+- 🐛 [Reportar Problema](https://github.com/shwcloudapp/seawise-backup/issues)
 
 ---
 
-## 💡 Dica: Exemplo Completo de Comando
+## 📋 Resumo do Comando Completo
 
-Copie e cole (alterando apenas o IP):
+Para facilitar, aqui está o comando completo em um único bloco:
 
 ```bash
-export CLUSTER_IP="192.168.100.97"  # <-- ALTERE AQUI
+# 1. Criar arquivo de configuração
+cat > rancher-values.yaml <<'YAML'
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+app:
+  veleroNamespace: "velero"
+  timezone: "America/Sao_Paulo"
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  hosts:
+    - host: seawise-backup.192.168.100.97.sslip.io
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - seawise-backup.192.168.100.97.sslip.io
+persistence:
+  enabled: true
+  storageClassName: "local-path"
+  size: 1Gi
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+YAML
 
+# 2. EDITE O IP (altere 192.168.100.97 para o IP do seu cluster)
+nano rancher-values.yaml
+
+# 3. Instalar
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
   --namespace seawise-app \
   --create-namespace \
-  --set ingress.enabled=true \
-  --set ingress.annotations."kubernetes\.io/ingress\.allow-http"="false" \
-  --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="web,websecure" \
-  --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
-  --set ingress.hosts[0].host="seawise-backup.${CLUSTER_IP}.sslip.io" \
-  --set ingress.hosts[0].paths[0].path="/" \
-  --set ingress.hosts[0].paths[0].pathType="Prefix" \
-  --set-string ingress.tls[0].hosts[0]="seawise-backup.${CLUSTER_IP}.sslip.io" \
-  --set persistence.storageClassName="local-path" \
-  --set app.veleroNamespace="velero"
+  -f rancher-values.yaml
 
-# Aguarde 1-2 minutos e acesse:
-echo "Acesse: https://seawise-backup.${CLUSTER_IP}.sslip.io"
+# 4. Verificar
+kubectl get pods,ingress -n seawise-app
+
+# 5. Acessar
+echo "Acesse: https://seawise-backup.SEU-IP.sslip.io"
 ```
 
 **Pronto! 🎉**

@@ -1,0 +1,52 @@
+# ============================================================================
+# Valores para Instalação no Rancher
+# ============================================================================
+# INSTRUÇÕES:
+# 1. Altere o IP nas linhas 24 e 27 para o IP do seu cluster Rancher
+# 2. Salve este arquivo como rancher-values.yaml
+# 3. Execute: helm install seawise-dashboard \
+#      https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.1/seawise-dashboard-1.5.1.tgz \
+#      --namespace seawise-app --create-namespace -f rancher-values.yaml
+
+# Imagem Docker (MANTENHA ASSIM - é a imagem publicada)
+image:
+  repository: shwcloud/seawise-backup  # Imagem no Docker Hub
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+
+# Configuração da aplicação
+app:
+  veleroNamespace: "velero"
+  timezone: "America/Sao_Paulo"
+
+# Ingress para Rancher/Traefik
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  hosts:
+    - host: seawise-backup.192.168.100.97.sslip.io  # ← ALTERE ESTE IP!
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - seawise-backup.192.168.100.97.sslip.io  # ← ALTERE ESTE IP!
+
+# Persistência
+persistence:
+  enabled: true
+  storageClassName: "local-path"
+  size: 1Gi
+
+# Recursos
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
