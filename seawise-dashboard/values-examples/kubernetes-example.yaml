@@ -1,8 +1,8 @@
 # ============================================================================
-# EXEMPLO: Instalação em Kubernetes vanilla com NGINX Ingress
+# EXAMPLE: Kubernetes Installation with NGINX Ingress
 # ============================================================================
-# Este é um exemplo de configuração para instalar o Seawise Dashboard em
-# um cluster Kubernetes com NGINX Ingress Controller
+# This is an example configuration to install Seawise Dashboard on a
+# vanilla Kubernetes cluster with NGINX Ingress Controller
 
 image:
   repository: shwcloud/seawise-backup
@@ -10,19 +10,19 @@ image:
   pullPolicy: IfNotPresent
 
 app:
-  # Namespace onde o Velero está instalado
+  # Namespace where Velero is installed
   veleroNamespace: "velero"
 
-  # Timezone - ajuste conforme sua localização
+  # Timezone - adjust according to your location
   timezone: "UTC"
 
-  # IMPORTANTE: Gere uma chave secreta em produção!
+  # IMPORTANT: Generate a secure secret key for production!
   # openssl rand -hex 32
   secretKey: ""
 
 persistence:
   enabled: true
-  # Deixe vazio para usar o storage class default
+  # Leave empty to use default storage class
   storageClassName: ""
   size: 1Gi
 
@@ -30,22 +30,23 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    # Forçar HTTPS
+    # Force HTTPS redirect
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # Limite de tamanho de body (para uploads)
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # Body size limit (for uploads)
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-    # Timeout
+    # Timeouts
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    # Descomente se usar cert-manager:
+    # Uncomment if using cert-manager:
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
-    - host: seawise.example.com
+    - host: seawise.example.com  # CHANGE: Use your domain or IP with sslip.io
       paths:
         - path: /
           pathType: Prefix
-  # Descomente para usar TLS:
+  # Uncomment to enable TLS:
   # tls:
   #   - secretName: seawise-tls
   #     hosts:
@@ -59,11 +60,11 @@ resources:
     cpu: 500m
     memory: 512Mi
 
-# Exemplo: executar em nodes específicos
+# Example: Run on specific nodes
 # nodeSelector:
 #   workload: management
 
-# Exemplo: tolerar taints específicos
+# Example: Tolerate specific taints
 # tolerations:
 #   - key: "workload"
 #     operator: "Equal"

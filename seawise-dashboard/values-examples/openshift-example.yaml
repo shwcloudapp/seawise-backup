@@ -1,8 +1,8 @@
 # ============================================================================
-# EXEMPLO: Instalação no OpenShift com Route
+# EXAMPLE: OpenShift Installation with Route
 # ============================================================================
-# Este é um exemplo de configuração para instalar o Seawise Dashboard em
-# um cluster OpenShift com OADP
+# This is an example configuration to install Seawise Dashboard on an
+# OpenShift cluster with OADP
 
 image:
   repository: shwcloud/seawise-backup
@@ -10,33 +10,33 @@ image:
   pullPolicy: IfNotPresent
 
 app:
-  # Namespace padrão do OADP no OpenShift
+  # Default OADP namespace on OpenShift
   veleroNamespace: "openshift-adp"
 
-  # Timezone - ajuste conforme sua localização
+  # Timezone - adjust according to your location
   timezone: "America/Sao_Paulo"
 
-  # IMPORTANTE: Gere uma chave secreta em produção!
+  # IMPORTANT: Generate a secure secret key for production!
   # openssl rand -hex 32
   secretKey: ""
 
 persistence:
   enabled: true
-  # Ajuste conforme o storage class disponível no seu cluster
+  # Adjust according to your cluster's available storage class
   storageClassName: "nfs-storage-class"
   size: 1Gi
 
-# OpenShift usa Route ao invés de Ingress
+# OpenShift uses Route instead of Ingress
 route:
   enabled: true
-  # Deixe vazio para hostname auto-gerado
+  # Leave empty for auto-generated hostname
   host: ""
   tls:
     enabled: true
     termination: edge
-    insecureEdgeTerminationPolicy: Redirect
+    # insecureEdgeTerminationPolicy: Redirect  # Uncomment to force HTTPS redirect
 
-# Ingress deve estar desabilitado no OpenShift
+# Ingress should be disabled on OpenShift
 ingress:
   enabled: false
 
@@ -48,8 +48,8 @@ resources:
     cpu: 500m
     memory: 512Mi
 
-# OpenShift possui SCCs (Security Context Constraints)
-# Ajuste se necessário conforme suas políticas
+# OpenShift has SCCs (Security Context Constraints)
+# Adjust if necessary according to your policies
 podSecurityContext:
   fsGroup: 1001
   runAsNonRoot: true
