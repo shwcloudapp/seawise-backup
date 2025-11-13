@@ -1,6 +1,13 @@
-# 🚀 Instalação no Rancher - Guia Simplificado
+<div align="center">
+  <img src="logo.png" alt="Seawise Logo" width="200"/>
 
-Guia rápido e fácil para instalar o Seawise Dashboard em clusters Rancher.
+  # Rancher Installation - Simplified Guide
+
+  Quick and easy guide to install Seawise Dashboard on Rancher clusters
+
+  [🌐 seawise.cloud](https://seawise.cloud) | [📦 GitHub](https://github.com/shwcloudapp/seawise-backup)
+
+</div>
 
 ---
 

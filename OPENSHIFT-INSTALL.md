@@ -1,6 +1,13 @@
-# 🚀 OpenShift Installation - Simplified Guide
+<div align="center">
+  <img src="logo.png" alt="Seawise Logo" width="200"/>
 
-Quick and easy guide to install Seawise Dashboard on OpenShift clusters with OADP.
+  # OpenShift Installation - Simplified Guide
+
+  Quick and easy guide to install Seawise Dashboard on OpenShift clusters with OADP
+
+  [🌐 seawise.cloud](https://seawise.cloud) | [📦 GitHub](https://github.com/shwcloudapp/seawise-backup)
+
+</div>
 
 ---
 

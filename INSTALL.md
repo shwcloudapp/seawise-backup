@@ -1,6 +1,13 @@
-# 📦 Seawise Dashboard - Installation Guide
+<div align="center">
+  <img src="logo.png" alt="Seawise Logo" width="200"/>
 
-**Choose your platform and follow 3 simple steps!**
+  # Seawise Dashboard - Installation Guide
+
+  **Choose your platform and follow 3 simple steps!**
+
+  [🌐 seawise.cloud](https://seawise.cloud) | [📦 GitHub](https://github.com/shwcloudapp/seawise-backup)
+
+</div>
 
 ---
 

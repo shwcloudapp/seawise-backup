@@ -1,6 +1,15 @@
-# 🚀 Seawise Backup Dashboard - Helm Chart
+<div align="center">
+  <img src="logo.png" alt="Seawise Logo" width="200"/>
 
-**Web interface for managing Velero/OADP backups on Kubernetes, Rancher, and OpenShift.**
+  # Seawise Backup Dashboard - Helm Chart
+
+  **Web interface for managing Velero/OADP backups on Kubernetes, Rancher, and OpenShift**
+
+  [![Website](https://img.shields.io/badge/Website-seawise.cloud-blue)](https://seawise.cloud)
+  [![GitHub](https://img.shields.io/badge/GitHub-seawise--backup-black)](https://github.com/shwcloudapp/seawise-backup)
+  [![Release](https://img.shields.io/github/v/release/shwcloudapp/seawise-backup)](https://github.com/shwcloudapp/seawise-backup/releases)
+
+</div>
 
 ---
 
@@ -166,6 +175,7 @@ Apache License 2.0 - see [LICENSE](../LICENSE)
 
 ## 🔗 Links
 
+- **🌐 Official Website**: https://seawise.cloud
 - **GitHub**: https://github.com/shwcloudapp/seawise-backup
 - **Docker Hub**: https://hub.docker.com/r/shwcloud/seawise-backup
 - **Issues**: https://github.com/shwcloudapp/seawise-backup/issues
@@ -173,4 +183,10 @@ Apache License 2.0 - see [LICENSE](../LICENSE)
 
 ---
 
+<div align="center">
+
 **Made with ❤️ by Seawise Team**
+
+[seawise.cloud](https://seawise.cloud) | [GitHub](https://github.com/shwcloudapp/seawise-backup)
+
+</div>
