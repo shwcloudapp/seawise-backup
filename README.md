@@ -77,7 +77,8 @@ kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
 ## 📚 Documentação Completa
 
 - 🚀 **[Guia de Instalação para Usuários](USER-INSTALL-GUIDE.md)**: Guia completo e simplificado para instalar via release
-- 🐄 **[Instalação no Rancher](RANCHER-INSTALL.md)**: Guia específico para clusters Rancher com Traefik
+- 🐄 **[Instalação no Rancher](RANCHER-INSTALL.md)**: Guia específico para clusters Rancher com Traefik/NGINX
+- 🔴 **[Instalação no OpenShift](OPENSHIFT-INSTALL.md)**: Guia específico para OpenShift com OADP
 - 📖 **[Guia Rápido](QUICK-START.md)**: Comece em 5 minutos
 - 📖 **[Helm Chart README](seawise-dashboard/README.md)**: Documentação completa do chart
 - 📖 **[Guia de Instalação Detalhado](seawise-dashboard/INSTALL.md)**: Instruções técnicas com troubleshooting
