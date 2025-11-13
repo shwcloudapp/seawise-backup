@@ -1,0 +1,54 @@
+# ============================================================================
+# EXEMPLO: Instalação no Rancher com Ingress
+# ============================================================================
+# Este é um exemplo de configuração para instalar o Seawise Dashboard em um
+# cluster Rancher com Traefik Ingress Controller
+
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+
+app:
+  # Namespace onde o Velero está instalado (comum no Rancher)
+  veleroNamespace: "velero"
+
+  # Timezone - ajuste conforme sua localização
+  timezone: "America/Sao_Paulo"
+
+  # IMPORTANTE: Gere uma chave secreta em produção!
+  # openssl rand -hex 32
+  secretKey: ""
+
+persistence:
+  enabled: true
+  # Storage class padrão do Rancher
+  storageClassName: "local-path"
+  size: 1Gi
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # Descomente se usar cert-manager:
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: seawise.192.168.1.100.sslip.io  # Ajuste para seu IP
+      paths:
+        - path: /
+          pathType: Prefix
+  # Descomente para usar TLS com cert-manager:
+  # tls:
+  #   - secretName: seawise-tls
+  #     hosts:
+  #       - seawise.seu-dominio.com
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

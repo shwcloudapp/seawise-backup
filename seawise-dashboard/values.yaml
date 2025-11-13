@@ -1,0 +1,196 @@
+# ============================================================================
+# Seawise Backup Dashboard - Helm Chart Values
+# ============================================================================
+# Default values for seawise-dashboard.
+# This is a YAML-formatted file.
+
+# ============================================================================
+# IMAGE CONFIGURATION
+# ============================================================================
+image:
+  repository: shwcloud/seawise-backup
+  pullPolicy: IfNotPresent
+  tag: "v1.5.0"
+
+imagePullSecrets: []
+
+# ============================================================================
+# NAMESPACE
+# ============================================================================
+# The namespace where Seawise Dashboard will be installed
+# Note: This is different from veleroNamespace below
+namespaceOverride: ""
+
+# ============================================================================
+# APPLICATION CONFIGURATION
+# ============================================================================
+app:
+  # Velero namespace where Velero/OADP is installed
+  # Common values: "velero" (Rancher/K8s), "openshift-adp" (OpenShift)
+  # Leave empty for auto-detection
+  veleroNamespace: "velero"
+
+  # Timezone for the application (e.g., "UTC", "America/Sao_Paulo", "Europe/London")
+  timezone: "UTC"
+
+  # Flask secret key for session encryption
+  # IMPORTANT: Generate a secure key for production with: openssl rand -hex 32
+  # If empty, a random key will be generated (sessions won't persist across restarts)
+  secretKey: ""
+
+# ============================================================================
+# SERVICE ACCOUNT
+# ============================================================================
+serviceAccount:
+  create: true
+  annotations:
+    backup.velero.io/privileged-pod: "true"
+  name: ""  # If empty, will use template fullname
+
+# ============================================================================
+# RBAC CONFIGURATION
+# ============================================================================
+rbac:
+  # Create RBAC resources (ClusterRole, ClusterRoleBinding, Role, RoleBinding)
+  create: true
+
+# ============================================================================
+# DEPLOYMENT
+# ============================================================================
+replicaCount: 1
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod labels
+podLabels: {}
+
+# Pod security context
+podSecurityContext:
+  fsGroup: 1001
+  runAsNonRoot: true
+  runAsUser: 1001
+
+# Container security context
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1001
+
+# ============================================================================
+# RESOURCES
+# ============================================================================
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# ============================================================================
+# PROBES
+# ============================================================================
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# ============================================================================
+# PERSISTENCE
+# ============================================================================
+persistence:
+  enabled: true
+  storageClassName: ""  # Leave empty for default storage class
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  existingClaim: ""  # Use existing PVC instead of creating a new one
+  annotations: {}
+
+# ============================================================================
+# SERVICE
+# ============================================================================
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+  nodePort: ""  # Only used if type is NodePort
+  annotations: {}
+
+# ============================================================================
+# INGRESS (for Rancher/Kubernetes)
+# ============================================================================
+ingress:
+  enabled: false
+  className: ""  # e.g., "nginx", "traefik"
+  annotations: {}
+    # kubernetes.io/ingress.allow-http: "false"
+    # traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    # traefik.ingress.kubernetes.io/router.tls: "true"
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: seawise-backup.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+    # - secretName: seawise-tls
+    #   hosts:
+    #     - seawise-backup.example.com
+
+# ============================================================================
+# OPENSHIFT ROUTE (alternative to Ingress)
+# ============================================================================
+route:
+  enabled: false
+  host: ""  # Leave empty for auto-generated hostname
+  tls:
+    enabled: true
+    termination: edge  # edge, passthrough, or reencrypt
+    insecureEdgeTerminationPolicy: Redirect
+  annotations: {}
+
+# ============================================================================
+# NODE SELECTION
+# ============================================================================
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# ============================================================================
+# EXTRA ENVIRONMENT VARIABLES
+# ============================================================================
+extraEnv: []
+  # - name: CUSTOM_VAR
+  #   value: "custom-value"
+
+extraEnvFrom: []
+  # - configMapRef:
+  #     name: custom-config
+  # - secretRef:
+  #     name: custom-secret
+
+# ============================================================================
+# EXTRA VOLUMES AND VOLUME MOUNTS
+# ============================================================================
+extraVolumes: []
+extraVolumeMounts: []

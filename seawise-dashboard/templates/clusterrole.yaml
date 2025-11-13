@@ -1,0 +1,103 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "seawise-dashboard.fullname" . }}-manager
+  labels:
+    {{- include "seawise-dashboard.labels" . | nindent 4 }}
+rules:
+  # ============================================================================
+  # VELERO RESOURCES
+  # ============================================================================
+  - apiGroups: ["velero.io"]
+    resources:
+      - backups
+      - restores
+      - schedules
+      - backupstoragelocations
+      - volumesnapshotlocations
+      - podvolumebackups
+      - podvolumerestores
+      - deletebackuprequests
+      - downloadrequests
+      - resticrepositories
+      - serverstatusrequests
+      - datauploads
+      - datadownloads
+      - backuprepositories
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # ============================================================================
+  # OADP (OpenShift) RESOURCES
+  # ============================================================================
+  - apiGroups: ["oadp.openshift.io"]
+    resources:
+      - dataprotectionapplications
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # ============================================================================
+  # CORE RESOURCES
+  # ============================================================================
+  # Namespaces, nodes, component status (read-only)
+  - apiGroups: [""]
+    resources:
+      - namespaces
+      - nodes
+      - componentstatuses
+    verbs: ["get", "list", "watch"]
+
+  # Secrets - required for cloud credentials management
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Pods - required for volume backup annotations
+  - apiGroups: [""]
+    resources:
+      - pods
+    verbs: ["get", "list", "watch", "patch"]
+
+  # ============================================================================
+  # WORKLOADS
+  # ============================================================================
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - statefulsets
+      - daemonsets
+      - replicasets
+    verbs: ["get", "list", "watch", "patch"]
+
+  # ============================================================================
+  # OPENSHIFT SPECIFIC
+  # ============================================================================
+  # Cluster version (OpenShift detection)
+  - apiGroups: ["config.openshift.io"]
+    resources:
+      - clusterversions
+    verbs: ["get", "list"]
+
+  # ClusterServiceVersion - for OADP Operator version detection
+  - apiGroups: ["operators.coreos.com"]
+    resources:
+      - clusterserviceversions
+    verbs: ["get", "list"]
+
+  # ============================================================================
+  # API EXTENSIONS
+  # ============================================================================
+  # CRDs - to check if Velero/OADP APIs exist
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources:
+      - customresourcedefinitions
+    verbs: ["get", "list", "watch"]
+
+  # ============================================================================
+  # EVENTS
+  # ============================================================================
+  - apiGroups: [""]
+    resources:
+      - events
+    verbs: ["get", "list", "watch"]
+{{- end }}

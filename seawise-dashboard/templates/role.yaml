@@ -1,0 +1,18 @@
+{{- if .Values.rbac.create -}}
+{{- if .Values.app.veleroNamespace }}
+---
+# Role to read Velero deployment in the Velero namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "seawise-dashboard.fullname" . }}-velero-reader
+  namespace: {{ .Values.app.veleroNamespace }}
+  labels:
+    {{- include "seawise-dashboard.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+    verbs: ["get", "list"]
+{{- end }}
+{{- end }}

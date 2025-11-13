@@ -1,0 +1,65 @@
+# ============================================================================
+# EXEMPLO: Instalação no OpenShift com Route
+# ============================================================================
+# Este é um exemplo de configuração para instalar o Seawise Dashboard em
+# um cluster OpenShift com OADP
+
+image:
+  repository: shwcloud/seawise-backup
+  tag: "v1.5.0"
+  pullPolicy: IfNotPresent
+
+app:
+  # Namespace padrão do OADP no OpenShift
+  veleroNamespace: "openshift-adp"
+
+  # Timezone - ajuste conforme sua localização
+  timezone: "America/Sao_Paulo"
+
+  # IMPORTANTE: Gere uma chave secreta em produção!
+  # openssl rand -hex 32
+  secretKey: ""
+
+persistence:
+  enabled: true
+  # Ajuste conforme o storage class disponível no seu cluster
+  storageClassName: "nfs-storage-class"
+  size: 1Gi
+
+# OpenShift usa Route ao invés de Ingress
+route:
+  enabled: true
+  # Deixe vazio para hostname auto-gerado
+  host: ""
+  tls:
+    enabled: true
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+# Ingress deve estar desabilitado no OpenShift
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# OpenShift possui SCCs (Security Context Constraints)
+# Ajuste se necessário conforme suas políticas
+podSecurityContext:
+  fsGroup: 1001
+  runAsNonRoot: true
+  runAsUser: 1001
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1001

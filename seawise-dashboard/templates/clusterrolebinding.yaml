@@ -1,0 +1,16 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "seawise-dashboard.fullname" . }}-manager-binding
+  labels:
+    {{- include "seawise-dashboard.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "seawise-dashboard.serviceAccountName" . }}
+    namespace: {{ include "seawise-dashboard.namespace" . }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "seawise-dashboard.fullname" . }}-manager
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
