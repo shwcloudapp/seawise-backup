@@ -28,18 +28,22 @@ persistence:
 
 ingress:
   enabled: true
-  className: "traefik"
+  className: ""  # Deixe vazio para Traefik padrão do Rancher
   annotations:
+    kubernetes.io/ingress.allow-http: "false"
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     # Descomente se usar cert-manager:
     # cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: seawise.192.168.1.100.sslip.io  # Ajuste para seu IP
+    - host: seawise-backup.192.168.1.100.sslip.io  # ALTERE: Use o IP do seu cluster
       paths:
         - path: /
           pathType: Prefix
-  # Descomente para usar TLS com cert-manager:
+  tls:
+    - hosts:
+        - seawise-backup.192.168.1.100.sslip.io  # Mesmo host acima
+  # Para usar domínio próprio com cert-manager:
   # tls:
   #   - secretName: seawise-tls
   #     hosts:
