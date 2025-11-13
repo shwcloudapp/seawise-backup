@@ -36,13 +36,13 @@ ingress:
     # Descomente se usar cert-manager:
     # cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: seawise-backup.192.168.1.100.sslip.io  # ALTERE: Use o IP do seu cluster
+    - host: seawise-backup.192.168.100.97.sslip.io  # ALTERE: Use o IP do seu cluster
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - seawise-backup.192.168.1.100.sslip.io  # Mesmo host acima
+        - seawise-backup.192.168.100.97.sslip.io  # Mesmo host acima
   # Para usar domínio próprio com cert-manager:
   # tls:
   #   - secretName: seawise-tls
