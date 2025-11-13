@@ -27,28 +27,40 @@ Antes de instalar o Dashboard, certifique-se de ter o Velero/OADP instalado no c
 
 ### 2. Instalar o Seawise Dashboard
 
-#### **Opção A: Kubernetes/Rancher**
+#### **⚡ RECOMENDADO: Instalação Direta da Release**
+
+**Não precisa clonar o repositório!**
+
+**Kubernetes/Rancher:**
+```bash
+helm install seawise-dashboard \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  --namespace seawise-app \
+  --create-namespace
+```
+
+**OpenShift:**
+```bash
+helm install seawise-dashboard \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.0/seawise-dashboard-1.5.0.tgz \
+  --namespace seawise-app \
+  --create-namespace \
+  --set app.veleroNamespace=openshift-adp \
+  --set route.enabled=true \
+  --set route.tls.enabled=true
+```
+
+#### **Opção Alternativa: Clonar Repositório**
 
 ```bash
 # Clonar repositório
 git clone https://github.com/shwcloudapp/seawise-backup.git
 cd seawise-backup/helm-chart
 
-# Instalar com valores padrão
+# Instalar
 helm install seawise-dashboard ./seawise-dashboard \
   --namespace seawise-app \
   --create-namespace
-```
-
-#### **Opção B: OpenShift**
-
-```bash
-helm install seawise-dashboard ./seawise-dashboard \
-  --namespace seawise-app \
-  --create-namespace \
-  --set app.veleroNamespace=openshift-adp \
-  --set route.enabled=true \
-  --set route.tls.enabled=true
 ```
 
 ### 3. Acessar o Dashboard
@@ -60,12 +72,16 @@ kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
 # Abrir navegador: http://localhost:8080
 ```
 
+📖 **Guia completo para usuários**: [USER-INSTALL-GUIDE.md](USER-INSTALL-GUIDE.md)
+
 ## 📚 Documentação Completa
 
-- **[Helm Chart README](seawise-dashboard/README.md)**: Documentação completa do chart
-- **[Guia de Instalação](seawise-dashboard/INSTALL.md)**: Instruções detalhadas com troubleshooting
-- **[Instalação Velero](../docs/instalacao_velero_completa.md)**: Como instalar Velero/OADP
-- **[Exemplos de Valores](seawise-dashboard/values-examples/)**: Configurações prontas para diferentes cenários
+- 🚀 **[Guia de Instalação para Usuários](USER-INSTALL-GUIDE.md)**: Guia completo e simplificado para instalar via release
+- 📖 **[Guia Rápido](QUICK-START.md)**: Comece em 5 minutos
+- 📖 **[Helm Chart README](seawise-dashboard/README.md)**: Documentação completa do chart
+- 📖 **[Guia de Instalação Detalhado](seawise-dashboard/INSTALL.md)**: Instruções técnicas com troubleshooting
+- 📖 **[Instalação Velero](../docs/instalacao_velero_completa.md)**: Como instalar Velero/OADP
+- 📖 **[Exemplos de Valores](seawise-dashboard/values-examples/)**: Configurações prontas para diferentes cenários
 
 ## 🎯 Exemplos Rápidos
 
