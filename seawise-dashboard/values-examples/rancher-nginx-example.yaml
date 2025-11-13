@@ -1,7 +1,7 @@
 # ============================================================================
-# EXEMPLO: Instalação no Rancher com NGINX Ingress Controller
+# EXAMPLE: Rancher Installation with NGINX Ingress Controller
 # ============================================================================
-# Use este arquivo se o seu Rancher usa NGINX ao invés de Traefik
+# Use this file if your Rancher cluster uses NGINX instead of Traefik
 
 image:
   repository: shwcloud/seawise-backup
@@ -9,19 +9,19 @@ image:
   pullPolicy: IfNotPresent
 
 app:
-  # Namespace onde o Velero está instalado (comum no Rancher)
+  # Namespace where Velero is installed (common on Rancher)
   veleroNamespace: "velero"
 
-  # Timezone - ajuste conforme sua localização
+  # Timezone - adjust according to your location
   timezone: "America/Sao_Paulo"
 
-  # IMPORTANTE: Gere uma chave secreta em produção!
+  # IMPORTANT: Generate a secure secret key for production!
   # openssl rand -hex 32
   secretKey: ""
 
 persistence:
   enabled: true
-  # Storage class padrão do Rancher
+  # Default Rancher storage class
   storageClassName: "local-path"
   size: 1Gi
 
@@ -31,22 +31,22 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    # Descomente se usar cert-manager:
+    # Uncomment if using cert-manager:
     # cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: seawise-backup.192.168.100.97.sslip.io  # ALTERE: Use o IP do seu cluster
+    - host: seawise-backup.192.168.100.97.sslip.io  # CHANGE: Use your cluster IP
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - seawise-backup.192.168.100.97.sslip.io  # Mesmo host acima
-      # secretName: seawise-tls  # Descomente se usar cert-manager
-  # Para usar domínio próprio com cert-manager:
+        - seawise-backup.192.168.100.97.sslip.io  # Same host as above
+      # secretName: seawise-tls  # Uncomment if using cert-manager
+  # To use custom domain with cert-manager:
   # tls:
   #   - secretName: seawise-tls
   #     hosts:
-  #       - seawise.seu-dominio.com
+  #       - seawise.your-domain.com
 
 resources:
   requests:
