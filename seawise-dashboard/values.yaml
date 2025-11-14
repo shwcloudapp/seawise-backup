@@ -96,23 +96,7 @@ resources:
 # PROBES
 # ============================================================================
 livenessProbe:
-  httpGet:
-    path: /
-    port: http
-  initialDelaySeconds: 60      # Increased to give app more time to start
-  periodSeconds: 30             # Increased to reduce probe frequency (was 10)
-  timeoutSeconds: 5
-  failureThreshold: 6           # Increased tolerance before restart (was 3)
-
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
-  initialDelaySeconds: 20       # Increased from 10
-  periodSeconds: 15             # Increased to reduce probe frequency (was 5)
-  timeoutSeconds: 3
-  failureThreshold: 3
-
+  enabled: false
 # ============================================================================
 # PERSISTENCE
 # ============================================================================

@@ -2,7 +2,7 @@ apiVersion: v2
 name: seawise-dashboard
 description: A Helm chart for Seawise Backup Dashboard - Velero/OADP management interface for Kubernetes, Rancher, and OpenShift
 type: application
-version: 1.5.5
+version: 1.5.6
 appVersion: "1.5.0"
 
 keywords:
