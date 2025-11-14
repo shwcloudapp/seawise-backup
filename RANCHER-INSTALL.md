@@ -93,9 +93,14 @@ nano rancher-values.yaml
 
 ### Step 3: Install
 
+**Latest Version:** Check [releases](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+
 ```bash
+# Set the version
+export CHART_VERSION=1.5.6
+
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f rancher-values.yaml
@@ -185,7 +190,7 @@ sed -i 's/192.168.100.97/YOUR_IP_HERE/g' rancher-nginx-values.yaml
 
 # Install
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f rancher-nginx-values.yaml
@@ -199,7 +204,7 @@ helm install seawise-dashboard \
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.timezone="America/New_York"
@@ -219,7 +224,7 @@ nano rancher-values.yaml
 
 # Update
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   -f rancher-values.yaml
 ```
@@ -234,7 +239,7 @@ kubectl get deployment --all-namespaces | grep velero
 
 # Update
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.veleroNamespace="cattle-velero"
@@ -264,7 +269,7 @@ If `local-path` doesn't exist, use another one (example: `default`, `nfs-client`
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set persistence.storageClassName="default"
@@ -298,7 +303,7 @@ kubectl get deployment --all-namespaces | grep velero
 
 # If it's in a different namespace, update:
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.veleroNamespace="CORRECT-NAMESPACE"
@@ -322,7 +327,7 @@ This is **normal** with sslip.io! Traefik generates a self-signed certificate.
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values
 ```
@@ -399,7 +404,7 @@ nano rancher-values.yaml
 
 # 3. Install
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.2/seawise-dashboard-1.5.2.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f rancher-values.yaml

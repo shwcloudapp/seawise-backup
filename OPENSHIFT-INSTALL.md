@@ -101,9 +101,14 @@ nano openshift-values.yaml
 
 ### Step 3: Install
 
+**Latest Version:** Check [releases](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+
 ```bash
+# Set the version
+export CHART_VERSION=1.5.6
+
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f openshift-values.yaml
@@ -150,7 +155,7 @@ seawise-dashboard   seawise-dashboard-seawise-app.apps.cluster.example.com
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.timezone="America/New_York"
@@ -169,7 +174,7 @@ nano openshift-values.yaml
 
 # Update
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   -f openshift-values.yaml
 ```
@@ -178,7 +183,7 @@ helm upgrade seawise-dashboard \
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set route.tls.insecureEdgeTerminationPolicy="Redirect"
@@ -194,7 +199,7 @@ oc get deployment --all-namespaces | grep velero
 
 # Update
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.veleroNamespace="YOUR-OADP-NAMESPACE"
@@ -224,7 +229,7 @@ If `nfs-storage-class` doesn't exist, use another one:
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set persistence.storageClassName="ocs-storagecluster-cephfs"
@@ -267,7 +272,7 @@ oc get deployment --all-namespaces | grep velero
 
 # If it's in a different namespace, update:
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values \
   --set app.veleroNamespace="CORRECT-NAMESPACE"
@@ -291,7 +296,7 @@ oc get sa -n seawise-app
 ```bash
 helm uninstall seawise-dashboard -n seawise-app
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f openshift-values.yaml
@@ -328,7 +333,7 @@ helm uninstall seawise-dashboard -n seawise-app
 
 # Reinstall with correct SCC settings
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.4/seawise-dashboard-1.5.4.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f openshift-values.yaml
@@ -340,7 +345,7 @@ helm install seawise-dashboard \
 
 ```bash
 helm upgrade seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --reuse-values
 ```
@@ -419,7 +424,7 @@ nano openshift-values.yaml
 
 # 3. Install
 helm install seawise-dashboard \
-  https://github.com/shwcloudapp/seawise-backup/releases/download/v1.5.3/seawise-dashboard-1.5.3.tgz \
+  https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
   -f openshift-values.yaml
