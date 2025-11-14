@@ -13,13 +13,13 @@
 
 ## 🎯 Quick Install
 
-**Latest Version:** [v1.5.6](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+**Latest Version:** [v1.5.7](https://github.com/shwcloudapp/seawise-backup/releases/latest)
 
 ### For Rancher (Traefik)
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.6
+export CHART_VERSION=1.5.7
 
 cat > values.yaml <<'EOF'
 image:
@@ -60,7 +60,7 @@ helm install seawise-dashboard \
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.6
+export CHART_VERSION=1.5.7
 
 cat > values.yaml <<'EOF'
 image:

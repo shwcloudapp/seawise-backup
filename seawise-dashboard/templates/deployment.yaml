@@ -54,13 +54,13 @@ spec:
         envFrom:
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- if .Values.livenessProbe }}
+        {{- if and .Values.livenessProbe .Values.livenessProbe.enabled }}
         livenessProbe:
-          {{- toYaml .Values.livenessProbe | nindent 10 }}
+          {{- toYaml (omit .Values.livenessProbe "enabled") | nindent 10 }}
         {{- end }}
-        {{- if .Values.readinessProbe }}
+        {{- if and .Values.readinessProbe .Values.readinessProbe.enabled }}
         readinessProbe:
-          {{- toYaml .Values.readinessProbe | nindent 10 }}
+          {{- toYaml (omit .Values.readinessProbe "enabled") | nindent 10 }}
         {{- end }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
