@@ -28,14 +28,14 @@
 
 ## 📦 Quick Install
 
-**Latest Version:** [v1.5.7](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
+**Latest Version:** [v1.5.8](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Choose your platform:**
 
 ### Rancher
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.7
+export CHART_VERSION=1.5.8
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -47,7 +47,7 @@ helm install seawise-dashboard \
 ### OpenShift
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.7
+export CHART_VERSION=1.5.8
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -59,7 +59,7 @@ helm install seawise-dashboard \
 ### Kubernetes
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.7
+export CHART_VERSION=1.5.8
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -121,7 +121,7 @@ Ready-to-use configuration files:
 
 ```bash
 # Set the new version
-export CHART_VERSION=1.5.7
+export CHART_VERSION=1.5.8
 
 helm upgrade seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -164,10 +164,10 @@ kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
 
 ## 📦 Releases
 
-Latest: [v1.5.7](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
+Latest: [v1.5.8](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Recent Changes:**
-- ✅ v1.5.7: [Current stable release]
+- ✅ v1.5.8: [Current stable release]
 - ✅ v1.5.5: Fixed HTTP 429 errors on liveness probe
 - ✅ v1.5.4: Fixed OpenShift SCC compatibility
 - ✅ v1.5.3: Documentation improvements
