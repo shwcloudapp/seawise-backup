@@ -10,7 +10,7 @@
 image:
   repository: shwcloud/seawise-backup
   pullPolicy: IfNotPresent
-  tag: "v1.5.0"
+  tag: "v1.5.2"
 
 imagePullSecrets: []
 
@@ -121,7 +121,7 @@ readinessProbe:
 persistence:
   enabled: true
   storageClassName: ""  # Leave empty for default storage class
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 1Gi
   existingClaim: ""  # Use existing PVC instead of creating a new one
   annotations: {}
