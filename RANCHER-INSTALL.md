@@ -97,7 +97,7 @@ nano rancher-values.yaml
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.8
+export CHART_VERSION=1.5.9
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
