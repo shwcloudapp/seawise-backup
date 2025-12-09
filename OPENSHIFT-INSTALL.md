@@ -43,7 +43,7 @@ If OADP is not installed, see: [OADP Installation Guide](https://docs.openshift.
 cat > openshift-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.10"
+  tag: "v1.5.12"
   pullPolicy: IfNotPresent
 
 app:
@@ -105,7 +105,7 @@ nano openshift-values.yaml
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.10
+export CHART_VERSION=1.5.12
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -384,7 +384,7 @@ For convenience, here's the complete command in a single block:
 cat > openshift-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.10"
+  tag: "v1.5.12"
   pullPolicy: IfNotPresent
 app:
   veleroNamespace: "openshift-adp"
