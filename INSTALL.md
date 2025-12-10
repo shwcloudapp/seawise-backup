@@ -13,18 +13,18 @@
 
 ## 🎯 Quick Install
 
-**Latest Version:** [v1.5.12](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+**Latest Version:** [v1.5.15](https://github.com/shwcloudapp/seawise-backup/releases/latest)
 
 ### For Rancher (Traefik)
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.12
+export CHART_VERSION=1.5.15
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.12"
+  tag: "v1.5.15"
 app:
   veleroNamespace: "velero"
 ingress:
@@ -60,12 +60,12 @@ helm install seawise-dashboard \
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.12
+export CHART_VERSION=1.5.15
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.12"
+  tag: "v1.5.15"
 app:
   veleroNamespace: "openshift-adp"
 route:
@@ -108,7 +108,7 @@ oc get route -n seawise-app  # Get URL
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.12"
+  tag: "v1.5.15"
 app:
   veleroNamespace: "velero"
 ingress:
