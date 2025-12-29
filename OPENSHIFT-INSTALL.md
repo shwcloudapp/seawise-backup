@@ -106,12 +106,14 @@ nano openshift-values.yaml
 ```bash
 # Set the version
 export CHART_VERSION=1.5.15
+export STORAGE_CLASS=nfs-storage-class
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
-  -f openshift-values.yaml
+  -f openshift-values.yaml \
+  --set persistence.storageClassName=${STORAGE_CLASS}
 ```
 
 **Done!** Wait 1-2 minutes and get the URL:

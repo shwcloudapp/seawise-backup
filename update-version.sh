@@ -21,6 +21,7 @@ usage() {
     echo "  1. Update Chart.yaml version"
     echo "  2. Update all documentation files"
     echo "  3. Update example values files"
+    echo "  4. Update website templates and documentation"
     exit 1
 }
 
@@ -54,6 +55,11 @@ FILES=(
     "seawise-dashboard/values-examples/rancher-nginx-example.yaml"
     "seawise-dashboard/values-examples/openshift-example.yaml"
     "seawise-dashboard/values-examples/kubernetes-example.yaml"
+    "../../site/templates/index.html"
+    "../../site/templates/docs_en.html"
+    "../../site/templates/docs_pt.html"
+    "../../site/docs/DOCS_EN.md"
+    "../../site/static/docs/DOCS_EN.md"
 )
 
 # Counter for updated files

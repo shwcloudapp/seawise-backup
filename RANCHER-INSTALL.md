@@ -98,12 +98,14 @@ nano rancher-values.yaml
 ```bash
 # Set the version
 export CHART_VERSION=1.5.15
+export STORAGE_CLASS=local-path
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
-  -f rancher-values.yaml
+  -f rancher-values.yaml \
+  --set persistence.storageClassName=${STORAGE_CLASS}
 ```
 
 **Done!** Wait 1-2 minutes and access:

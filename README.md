@@ -36,36 +36,42 @@
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
 export CHART_VERSION=1.5.15
+export STORAGE_CLASS=storage_class_name
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set ingress.enabled=true \
-  --set ingress.hosts[0].host=seawise.192.168.100.97.sslip.io
+  --set ingress.hosts[0].host=seawise.192.168.100.97.sslip.io \
+  --set persistence.storageClassName=${STORAGE_CLASS}
 ```
 
 ### OpenShift
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
 export CHART_VERSION=1.5.15
+export STORAGE_CLASS=storage_class_name
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set app.veleroNamespace=openshift-adp \
-  --set route.enabled=true
+  --set route.enabled=true \
+  --set persistence.storageClassName=${STORAGE_CLASS}
 ```
 
 ### Kubernetes
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
 export CHART_VERSION=1.5.15
+export STORAGE_CLASS=storage_class_name
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set ingress.enabled=true \
-  --set ingress.className=nginx
+  --set ingress.className=nginx \
+  --set persistence.storageClassName=${STORAGE_CLASS}
 ```
 
 ---
