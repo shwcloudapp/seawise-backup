@@ -1,48 +1,7 @@
 # Artifact Hub repository metadata file
 # https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
 repositoryID: seawise-backup
-name: Seawise Backup Dashboard
-displayName: Seawise Backup Dashboard
-url: https://github.com/shwcloudapp/seawise-backup/releases
-branch: main
 
 owners:
   - name: Seawise Team
     email: marcell@seawise.cloud
-
-# Repository metadata
-description: |
-  Official Helm chart repository for Seawise Backup Dashboard - A modern web interface
-  for managing Velero/OADP backups and restores on Kubernetes, Rancher, and OpenShift clusters.
-
-  Features:
-  - Complete backup & restore management
-  - Multi-platform support (Kubernetes, Rancher, OpenShift)
-  - Scheduled backups with cron policies
-  - Automatic volume backup with pod annotation
-  - Multi-cloud support (AWS, Azure, GCP)
-  - Modern UI with internationalization (English/Portuguese)
-  - PDF report generation
-  - Role-based authentication
-
-links:
-  - name: Website
-    url: https://seawise.cloud
-  - name: GitHub
-    url: https://github.com/shwcloudapp/seawise-backup
-  - name: Docker Hub
-    url: https://hub.docker.com/r/shwcloud/seawise-backup
-  - name: Installation Guide
-    url: https://github.com/shwcloudapp/seawise-backup/blob/main/helm-chart/INSTALL.md
-  - name: Rancher Install
-    url: https://github.com/shwcloudapp/seawise-backup/blob/main/helm-chart/RANCHER-INSTALL.md
-  - name: OpenShift Install
-    url: https://github.com/shwcloudapp/seawise-backup/blob/main/helm-chart/OPENSHIFT-INSTALL.md
-  - name: Issue Tracker
-    url: https://github.com/shwcloudapp/seawise-backup/issues
-
-# Ignore patterns for chart indexing
-ignore:
-  - "*.tgz"
-  - "*.sh"
-  - "logo.png"

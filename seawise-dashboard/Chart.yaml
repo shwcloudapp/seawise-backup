@@ -1,9 +1,12 @@
 apiVersion: v2
 name: seawise-dashboard
-description: A Helm chart for Seawise Backup Dashboard - Velero/OADP management interface for Kubernetes, Rancher, and OpenShift
+description: A Helm chart for Seawise Backup Dashboard – a modern Velero/OADP management interface for Kubernetes, Rancher, and OpenShift
 type: application
+
 version: 1.5.15
 appVersion: "1.5.15"
+
+kubeVersion: ">=1.22.0-0"
 
 keywords:
   - velero
@@ -16,13 +19,18 @@ keywords:
   - backup-management
 
 home: https://github.com/shwcloudapp/seawise-backup
+
 sources:
   - https://github.com/shwcloudapp/seawise-backup
+  - https://github.com/shwcloudapp/seawise-backup/releases
   - https://hub.docker.com/r/shwcloud/seawise-backup
 
 maintainers:
   - name: Seawise Team
+    email: marcell@seawise.cloud
+
+icon: https://raw.githubusercontent.com/shwcloudapp/seawise-backup/main/logo.png
 
 annotations:
-  category: Infrastructure
-  licenses: Apache-2.0
+  artifacthub.io/category: infrastructure
+  artifacthub.io/license: Apache-2.0
