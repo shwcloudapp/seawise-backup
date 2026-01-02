@@ -1,1 +1,58 @@
+# Helm chart packages
 *.tgz
+
+# Python application files (kept in private repository)
+*.py
+*.pyc
+*.pyo
+__pycache__/
+*.db
+*.mo
+*.pot
+requirements.txt
+babel.cfg
+.env*
+.dockerignore
+
+# Directories (Python app in private repo)
+routes/
+templates/
+static/
+translations/
+utils/
+tests/
+docs/
+pkg/
+venv/
+.claude/
+.github/
+suportes/
+helm-chart/
+
+# Dockerfiles (in private repo)
+Dockerfile*
+
+# Scripts
+*.sh
+!helm-chart/**/*.sh
+
+# Documentation (in private repo)
+CLAUDE.md
+README.md
+
+# Duplicated files
+*" 2"
+*" 2."*
+.guitignore
+.nojekyll
+update-version.sh
+
+# Keep only helm-chart files
+!helm-chart/
+!helm-chart/**/*
+!artifacthub-repo.yml
+!index.yaml
+!INSTALL.md
+!OPENSHIFT-INSTALL.md
+!RANCHER-INSTALL.md
+!logo.png
