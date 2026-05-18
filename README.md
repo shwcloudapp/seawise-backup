@@ -28,50 +28,44 @@
 
 ## 📦 Quick Install
 
-**Latest Version:** [v1.5.15](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
+**Latest Version:** [v1.6.0](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Choose your platform:**
 
 ### Rancher
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=storage_class_name
+export CHART_VERSION=1.6.0
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set ingress.enabled=true \
-  --set ingress.hosts[0].host=seawise.192.168.100.97.sslip.io \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  --set ingress.hosts[0].host=seawise.192.168.100.97.sslip.io
 ```
 
 ### OpenShift
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=storage_class_name
+export CHART_VERSION=1.6.0
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set app.veleroNamespace=openshift-adp \
-  --set route.enabled=true \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  --set route.enabled=true
 ```
 
 ### Kubernetes
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=storage_class_name
+export CHART_VERSION=1.6.0
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   -n seawise-app --create-namespace \
   --set ingress.enabled=true \
-  --set ingress.className=nginx \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  --set ingress.className=nginx
 ```
 
 ---
@@ -101,7 +95,7 @@ kubectl get ingress -n seawise-app  # or: oc get route -n seawise-app
 | Parameter | Description | Default |
 |-----------|-------------|---------|
 | `image.repository` | Docker image | `shwcloud/seawise-backup` |
-| `image.tag` | Image version | `v1.5.15` |
+| `image.tag` | Image version | `v1.6.0` |
 | `app.veleroNamespace` | Velero namespace | `velero` |
 | `ingress.enabled` | Enable Ingress | `false` |
 | `route.enabled` | Enable Route (OpenShift) | `false` |
@@ -127,7 +121,7 @@ Ready-to-use configuration files:
 
 ```bash
 # Set the new version
-export CHART_VERSION=1.5.15
+export CHART_VERSION=1.6.0
 
 helm upgrade seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -170,13 +164,13 @@ kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
 
 ## 📦 Releases
 
-Latest: [v1.5.15](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
+Latest: [v1.6.0](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Recent Changes:**
-- ✅ v1.5.15: [Current stable release]
+- ✅ v1.6.0: [Current stable release]
 - ✅ v1.5.5: Fixed HTTP 429 errors on liveness probe
-- ✅ v1.5.4: Fixed OpenShift SCC compatibility
-- ✅ v1.5.3: Documentation improvements
+- ✅ v1.6.0: Fixed OpenShift SCC compatibility
+- ✅ v1.6.0: Documentation improvements
 
 ---
 

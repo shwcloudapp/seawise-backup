@@ -13,19 +13,18 @@
 
 ## 🎯 Quick Install
 
-**Latest Version:** [v1.5.15](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+**Latest Version:** [v1.6.0](https://github.com/shwcloudapp/seawise-backup/releases/latest)
 
 ### For Rancher (Traefik)
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=local-path
+export CHART_VERSION=1.6.0
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
 app:
   veleroNamespace: "velero"
 ingress:
@@ -52,8 +51,7 @@ nano values.yaml  # Edit IP
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
-  -n seawise-app --create-namespace -f values.yaml \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  -n seawise-app --create-namespace -f values.yaml
 ```
 
 ---
@@ -62,13 +60,12 @@ helm install seawise-dashboard \
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=nfs-storage-class
+export CHART_VERSION=1.6.0
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
 app:
   veleroNamespace: "openshift-adp"
 route:
@@ -98,8 +95,7 @@ nano values.yaml     # Edit storage class
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
-  -n seawise-app --create-namespace -f values.yaml \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  -n seawise-app --create-namespace -f values.yaml
 
 oc get route -n seawise-app  # Get URL
 ```
@@ -109,14 +105,10 @@ oc get route -n seawise-app  # Get URL
 ### For Kubernetes (NGINX)
 
 ```bash
-# Set the version
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=storage_class_name
-
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
 app:
   veleroNamespace: "velero"
 ingress:
@@ -138,8 +130,7 @@ nano values.yaml  # Edit hostname
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
-  -n seawise-app --create-namespace -f values.yaml \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  -n seawise-app --create-namespace -f values.yaml
 ```
 
 ---

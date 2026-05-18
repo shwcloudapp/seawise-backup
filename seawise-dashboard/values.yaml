@@ -9,8 +9,8 @@
 # ============================================================================
 image:
   repository: shwcloud/seawise-backup
-  pullPolicy: Always
-  tag: "v1.5.15"
+  pullPolicy: IfNotPresent
+  tag: "v1.6.0"
 
 imagePullSecrets: []
 

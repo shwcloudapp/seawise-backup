@@ -40,7 +40,7 @@ Note the **INTERNAL IP** of any node (example: `192.168.100.97`)
 cat > rancher-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
   pullPolicy: IfNotPresent
 
 app:
@@ -97,15 +97,13 @@ nano rancher-values.yaml
 
 ```bash
 # Set the version
-export CHART_VERSION=1.5.15
-export STORAGE_CLASS=local-path
+export CHART_VERSION=1.6.0
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
   --namespace seawise-app \
   --create-namespace \
-  -f rancher-values.yaml \
-  --set persistence.storageClassName=${STORAGE_CLASS}
+  -f rancher-values.yaml
 ```
 
 **Done!** Wait 1-2 minutes and access:
@@ -149,7 +147,7 @@ If your Rancher uses NGINX Ingress Controller, use this file:
 cat > rancher-nginx-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
   pullPolicy: IfNotPresent
 
 app:
@@ -368,7 +366,7 @@ For convenience, here's the complete command in a single block:
 cat > rancher-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.5.15"
+  tag: "v1.6.0"
   pullPolicy: IfNotPresent
 app:
   veleroNamespace: "velero"
