@@ -1,10 +1,10 @@
 # Artifact Hub repository metadata file
 # https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
-repositoryID: seawise-backup
+repositoryID: b782836b-0650-4ab8-8482-0f6fe23d745b
 
 owners:
-  - name: Seawise Team
-    email: marcell@seawise.cloud
+  - name: Seawise
+    email: suporte@seawise.cloud
 
 # Repository metadata
 description: |
