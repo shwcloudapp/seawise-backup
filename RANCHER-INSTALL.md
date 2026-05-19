@@ -40,7 +40,7 @@ Note the **INTERNAL IP** of any node (example: `192.168.100.97`)
 cat > rancher-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
   pullPolicy: IfNotPresent
 
 app:
@@ -66,7 +66,22 @@ ingress:
 persistence:
   enabled: true
   storageClassName: "local-path"
+  accessMode: ReadWriteOnce
   size: 1Gi
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
 
 resources:
   requests:
@@ -97,7 +112,7 @@ nano rancher-values.yaml
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.5
+export CHART_VERSION=1.6.6
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -147,7 +162,7 @@ If your Rancher uses NGINX Ingress Controller, use this file:
 cat > rancher-nginx-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
   pullPolicy: IfNotPresent
 
 app:
@@ -352,7 +367,7 @@ kubectl delete namespace seawise-app
 ## 🆘 Need Help?
 
 - 📖 [Complete Documentation](README.md)
-- 📖 [General Guide](USER-INSTALL-GUIDE.md)
+- 📖 [General Guide](INSTALL.md)
 - 🐛 [Report Issue](https://github.com/shwcloudapp/seawise-backup/issues)
 
 ---
@@ -366,7 +381,7 @@ For convenience, here's the complete command in a single block:
 cat > rancher-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
   pullPolicy: IfNotPresent
 app:
   veleroNamespace: "velero"

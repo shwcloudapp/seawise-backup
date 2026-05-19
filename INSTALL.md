@@ -13,18 +13,18 @@
 
 ## 🎯 Quick Install
 
-**Latest Version:** [v1.6.5](https://github.com/shwcloudapp/seawise-backup/releases/latest)
+**Latest Version:** [v1.6.6](https://github.com/shwcloudapp/seawise-backup/releases/latest)
 
 ### For Rancher (Traefik)
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.5
+export CHART_VERSION=1.6.6
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
 app:
   veleroNamespace: "velero"
 ingress:
@@ -44,7 +44,20 @@ ingress:
 persistence:
   enabled: true
   storageClassName: "local-path"
+  accessMode: ReadWriteOnce
   size: 1Gi
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
 EOF
 
 nano values.yaml  # Edit IP
@@ -60,12 +73,12 @@ helm install seawise-dashboard \
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.5
+export CHART_VERSION=1.6.6
 
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
 app:
   veleroNamespace: "openshift-adp"
 route:
@@ -108,7 +121,7 @@ oc get route -n seawise-app  # Get URL
 cat > values.yaml <<'EOF'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
 app:
   veleroNamespace: "velero"
 ingress:
@@ -123,7 +136,20 @@ ingress:
           pathType: Prefix
 persistence:
   enabled: true
+  accessMode: ReadWriteOnce
   size: 1Gi
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
 EOF
 
 nano values.yaml  # Edit hostname
@@ -150,6 +176,25 @@ oc get route -n seawise-app
 
 ---
 
+## 🔐 First Access
+
+After installation, access the dashboard and login with the default credentials:
+
+- **Username:** `admin`
+- **Password:** `admin123`
+
+> ⚠️ **Change the password immediately** after first login via Settings → Users.
+
+---
+
+## 💾 About the PVC
+
+The dashboard stores all users, settings, and history in a SQLite database inside the PVC (`/data`).
+
+> ⚠️ **Deleting the PVC will delete all data.** The actual Velero backups stored in S3/Azure/GCP are not affected.
+
+---
+
 ## 🆘 Problems?
 
 ### Pod not starting?
@@ -172,7 +217,6 @@ kubectl get deployment --all-namespaces | grep velero
 
 - 🐄 [Rancher Guide](RANCHER-INSTALL.md) - Traefik & NGINX
 - 🔴 [OpenShift Guide](OPENSHIFT-INSTALL.md) - OADP & SCC
-- 📖 [Complete Guide](USER-INSTALL-GUIDE.md) - All platforms
 
 ---
 

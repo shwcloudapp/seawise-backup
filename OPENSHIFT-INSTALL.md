@@ -43,7 +43,7 @@ If OADP is not installed, see: [OADP Installation Guide](https://docs.openshift.
 cat > openshift-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
   pullPolicy: IfNotPresent
 
 app:
@@ -105,7 +105,7 @@ nano openshift-values.yaml
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.5
+export CHART_VERSION=1.6.6
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -323,7 +323,7 @@ oc describe pod -n seawise-app -l app.kubernetes.io/name=seawise-dashboard | gre
 oc get scc
 ```
 
-**Solution:** The Helm chart v1.6.5+ is already configured correctly for OpenShift. Just make sure you're NOT specifying `runAsUser` or `fsGroup` in your values file.
+**Solution:** The Helm chart v1.6.6+ is already configured correctly for OpenShift. Just make sure you're NOT specifying `runAsUser` or `fsGroup` in your values file.
 
 If upgrading from an older version:
 
@@ -370,7 +370,7 @@ oc delete project seawise-app
 ## 🆘 Need Help?
 
 - 📖 [Complete Documentation](README.md)
-- 📖 [General Guide](USER-INSTALL-GUIDE.md)
+- 📖 [General Guide](INSTALL.md)
 - 🐛 [Report Issue](https://github.com/shwcloudapp/seawise-backup/issues)
 
 ---
@@ -384,7 +384,7 @@ For convenience, here's the complete command in a single block:
 cat > openshift-values.yaml <<'YAML'
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.5"
+  tag: "v1.6.6"
   pullPolicy: IfNotPresent
 app:
   veleroNamespace: "openshift-adp"
