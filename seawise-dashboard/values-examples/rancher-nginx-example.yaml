@@ -5,7 +5,7 @@
 
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.4"
+  tag: "v1.6.5"
   pullPolicy: IfNotPresent
 
 app:
@@ -47,6 +47,21 @@ ingress:
   #   - secretName: seawise-tls
   #     hosts:
   #       - seawise.your-domain.com
+
+# Required for Rancher/Kubernetes: ensures PVC is writable by non-root container
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
 
 resources:
   requests:

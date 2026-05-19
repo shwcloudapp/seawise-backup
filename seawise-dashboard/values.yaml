@@ -10,7 +10,7 @@
 image:
   repository: shwcloud/seawise-backup
   pullPolicy: IfNotPresent
-  tag: "v1.6.4"
+  tag: "v1.6.5"
 
 imagePullSecrets: []
 
@@ -66,10 +66,10 @@ podAnnotations: {}
 podLabels: {}
 
 # Pod security context
+# Note: for Rancher/Kubernetes, set runAsUser and fsGroup explicitly (see values-examples/)
+# Note: for OpenShift, leave empty — SCC assigns UID and fsGroup automatically
 podSecurityContext:
-  # fsGroup: 1001  # Uncomment for non-OpenShift environments if needed
   runAsNonRoot: true
-  # runAsUser: 1001  # Uncomment for non-OpenShift environments if needed
 
 # Container security context
 securityContext:
@@ -79,7 +79,6 @@ securityContext:
     - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  # runAsUser: 1001  # Uncomment for non-OpenShift environments if needed
 
 # ============================================================================
 # RESOURCES
