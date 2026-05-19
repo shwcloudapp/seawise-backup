@@ -6,7 +6,7 @@
 
 image:
   repository: shwcloud/seawise-backup
-  tag: "v1.6.1"
+  tag: "v1.6.4"
   pullPolicy: IfNotPresent
 
 app:
