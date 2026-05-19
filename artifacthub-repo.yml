@@ -37,8 +37,3 @@ links:
   - name: Issue Tracker
     url: https://github.com/shwcloudapp/seawise-backup/issues
 
-# Ignore patterns for chart indexing
-ignore:
-  - "*.tgz"
-  - "*.sh"
-  - "logo.png"
