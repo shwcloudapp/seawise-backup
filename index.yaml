@@ -6,10 +6,10 @@ entries:
       licenses: Apache-2.0
     apiVersion: v2
     appVersion: 1.6.6
-    created: "2026-05-19T19:13:35.781496088Z"
+    created: "2026-05-19T16:15:02.871042-03:00"
     description: A Helm chart for Seawise Backup Dashboard - Velero/OADP management
       interface for Kubernetes, Rancher, and OpenShift
-    digest: bec7ef60f6fe87b045c75989c916a505a522c90f9c84f0533531adb83840d876
+    digest: 0dd5e8934d8edcfde2b6ada5ccc340e88e9fc296e3d35c9a56609e8582573faf
     home: https://github.com/shwcloudapp/seawise-backup
     keywords:
     - velero
@@ -28,35 +28,6 @@ entries:
     - https://hub.docker.com/r/shwcloud/seawise-backup
     type: application
     urls:
-    - https://shwcloudapp.github.io/seawise-backup/seawise-dashboard-1.6.6.tgz
+    - https://github.com/shwcloudapp/seawise-backup/releases/download/v1.6.6/seawise-dashboard-1.6.6.tgz
     version: 1.6.6
-  - annotations:
-      category: Infrastructure
-      licenses: Apache-2.0
-    apiVersion: v2
-    appVersion: 1.6.5
-    created: "2026-05-19T14:51:18.101686-03:00"
-    description: A Helm chart for Seawise Backup Dashboard - Velero/OADP management
-      interface for Kubernetes, Rancher, and OpenShift
-    digest: b6a9bb33b197032e5547311936b72e670800a90a020dc2aa327812519323739c
-    home: https://github.com/shwcloudapp/seawise-backup
-    keywords:
-    - velero
-    - backup
-    - kubernetes
-    - openshift
-    - rancher
-    - oadp
-    - disaster-recovery
-    - backup-management
-    maintainers:
-    - name: Seawise Team
-    name: seawise-dashboard
-    sources:
-    - https://github.com/shwcloudapp/seawise-backup
-    - https://hub.docker.com/r/shwcloud/seawise-backup
-    type: application
-    urls:
-    - https://github.com/shwcloudapp/seawise-backup/releases/download/v1.6.5/seawise-dashboard-1.6.5.tgz
-    version: 1.6.5
-generated: "2026-05-19T19:13:35.780565532Z"
+generated: "2026-05-19T16:15:02.87027-03:00"
