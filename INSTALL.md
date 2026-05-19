@@ -19,7 +19,7 @@
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 cat > values.yaml <<'EOF'
 image:
@@ -60,7 +60,7 @@ helm install seawise-dashboard \
 
 ```bash
 # Set the version
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 cat > values.yaml <<'EOF'
 image:

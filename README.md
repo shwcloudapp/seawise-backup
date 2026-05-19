@@ -35,7 +35,7 @@
 ### Rancher
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -47,7 +47,7 @@ helm install seawise-dashboard \
 ### OpenShift
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -59,7 +59,7 @@ helm install seawise-dashboard \
 ### Kubernetes
 ```bash
 # Set the version (check latest at: https://github.com/shwcloudapp/seawise-backup/releases/latest)
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 helm install seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -121,7 +121,7 @@ Ready-to-use configuration files:
 
 ```bash
 # Set the new version
-export CHART_VERSION=1.6.1
+export CHART_VERSION=1.6.2
 
 helm upgrade seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
