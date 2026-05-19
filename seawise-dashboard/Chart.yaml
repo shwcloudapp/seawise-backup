@@ -26,3 +26,6 @@ maintainers:
 annotations:
   category: Infrastructure
   licenses: Apache-2.0
+  artifacthub.io/images: |
+    - name: seawise-dashboard
+      image: shwcloud/seawise-backup:v1.6.6
