@@ -22,7 +22,15 @@
 - ✅ Multi-cloud support (AWS, Azure, GCP)
 - ✅ Modern UI with English/Portuguese
 - ✅ PDF reports
-- ✅ Role-based authentication
+- ✅ Role-based authentication (admin, backup, viewer)
+- ✅ Email notifications for backup success/failure
+- ✅ Guided setup wizard for first-time configuration
+- ✅ Backup Storage Location (BSL) management
+- ✅ Data Protection Application (DPA) management — OpenShift OADP
+- ✅ Automatic cluster detection (OpenShift / Rancher / Kubernetes)
+- ✅ User management (create, edit, delete users)
+- ✅ Version checker with in-app update notifications
+- ✅ Custom logo upload
 
 ---
 
