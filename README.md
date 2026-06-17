@@ -36,13 +36,13 @@
 
 ## 📦 Quick Install
 
-**Latest Version:** [v1.6.6](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
+**Latest Version:** [v1.7.0](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [All Releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Choose your platform:**
 
 ### Rancher
 ```bash
-export CHART_VERSION=1.6.6
+export CHART_VERSION=1.7.0
 export CLUSTER_HOST=seawise.your-cluster-ip.sslip.io  # CHANGE
 export STORAGE_CLASS=local-path                         # CHANGE if needed
 
@@ -62,7 +62,7 @@ helm upgrade --install seawise-dashboard \
 
 ### OpenShift
 ```bash
-export CHART_VERSION=1.6.6
+export CHART_VERSION=1.7.0
 export STORAGE_CLASS=nfs-storage-class  # CHANGE: check with: oc get storageclass
 
 helm upgrade --install seawise-dashboard \
@@ -75,7 +75,7 @@ helm upgrade --install seawise-dashboard \
 
 ### Kubernetes
 ```bash
-export CHART_VERSION=1.6.6
+export CHART_VERSION=1.7.0
 export CLUSTER_HOST=seawise.example.com  # CHANGE
 export STORAGE_CLASS=""                   # Leave empty for default, or set your class
 
@@ -119,7 +119,7 @@ kubectl get ingress -n seawise-app  # or: oc get route -n seawise-app
 | Parameter | Description | Default |
 |-----------|-------------|---------|
 | `image.repository` | Docker image | `shwcloud/seawise-backup` |
-| `image.tag` | Image version | `v1.6.6` |
+| `image.tag` | Image version | `v1.7.0` |
 | `app.veleroNamespace` | Velero namespace | `velero` |
 | `ingress.enabled` | Enable Ingress | `false` |
 | `route.enabled` | Enable Route (OpenShift) | `false` |
@@ -145,7 +145,7 @@ Ready-to-use configuration files:
 
 ```bash
 # Set the new version
-export CHART_VERSION=1.6.6
+export CHART_VERSION=1.7.0
 
 helm upgrade seawise-dashboard \
   https://github.com/shwcloudapp/seawise-backup/releases/download/v${CHART_VERSION}/seawise-dashboard-${CHART_VERSION}.tgz \
@@ -188,13 +188,13 @@ kubectl port-forward -n seawise-app svc/seawise-dashboard 8080:80
 
 ## 📦 Releases
 
-Latest: [v1.6.6](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
+Latest: [v1.7.0](https://github.com/shwcloudapp/seawise-backup/releases/latest) | [View all releases](https://github.com/shwcloudapp/seawise-backup/releases)
 
 **Recent Changes:**
-- ✅ v1.6.6: [Current stable release]
+- ✅ v1.7.0: [Current stable release]
 - ✅ v1.5.5: Fixed HTTP 429 errors on liveness probe
-- ✅ v1.6.6: Fixed OpenShift SCC compatibility
-- ✅ v1.6.6: Documentation improvements
+- ✅ v1.7.0: Fixed OpenShift SCC compatibility
+- ✅ v1.7.0: Documentation improvements
 
 ---
 
