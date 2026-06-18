@@ -31,7 +31,7 @@ entries:
     - https://hub.docker.com/r/shwcloud/seawise-backup
     type: application
     urls:
-    - https://shwcloudapp.github.io/seawise-backup/seawise-dashboard-1.7.0.tgz
+    - https://github.com/shwcloudapp/seawise-backup/releases/download/v1.7.0/seawise-dashboard-1.7.0.tgz
     version: 1.7.0
   - annotations:
       artifacthub.io/images: |
