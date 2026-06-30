@@ -20,9 +20,12 @@ You need:
 
 ---
 
-## 🎯 Installation in 3 Steps
+## 🎯 Installation
 
-### Step 1: Verify OADP Installation
+Two supported paths: **Option A — OperatorHub** (recommended) or **Option B — Helm**.
+Both require OADP first:
+
+### Prerequisite: Verify OADP Installation
 
 ```bash
 # Check if OADP is installed
@@ -34,6 +37,89 @@ oc get deployment -n openshift-adp
 If OADP is not installed, see: [OADP Installation Guide](https://docs.openshift.com/container-platform/latest/backup_and_restore/application_backup_and_restore/installing/installing-oadp-ocs.html)
 
 ---
+
+## 🧩 Option A: Install via OperatorHub (Recommended for OpenShift)
+
+Seawise is a **Red Hat Certified Operator** available in the in-cluster
+OperatorHub. This is the easiest path on OpenShift — the Operator deploys and
+manages the dashboard for you, and you get automatic upgrades.
+
+### A.1 — Install the Operator (Web Console)
+
+1. In the OpenShift Console, go to **Operators → OperatorHub**.
+2. Search for **Seawise Backup Dashboard** and click it.
+3. Click **Install**, keep the defaults, and **Install** again.
+4. Wait until the Operator status is **Succeeded** (Operators → Installed Operators).
+
+> CLI alternative:
+> ```bash
+> oc apply -f - <<'YAML'
+> apiVersion: operators.coreos.com/v1alpha1
+> kind: Subscription
+> metadata:
+>   name: seawise-backup-operator
+>   namespace: openshift-operators
+> spec:
+>   channel: alpha
+>   name: seawise-backup-operator
+>   source: certified-operators
+>   sourceNamespace: openshift-marketplace
+> YAML
+> ```
+
+### A.2 — Create a Seawise instance
+
+In **Installed Operators → Seawise Backup Dashboard → Create instance**, or via CLI:
+
+```bash
+oc new-project seawise-app   # namespace for the dashboard
+
+oc apply -f - <<'YAML'
+apiVersion: backup.seawise.cloud/v1alpha1
+kind: Seawise
+metadata:
+  name: seawise-dashboard
+  namespace: seawise-app
+spec:
+  replicaCount: 1
+  image:
+    repository: quay.io/marcellshwcloud/seawise-backup-dashboard
+    tag: v1.7.1-ubi
+  app:
+    veleroNamespace: openshift-adp        # where OADP/Velero is installed
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    storageClassName: "nfs-storage-class" # <-- set YOUR cluster's StorageClass
+  service:
+    port: 80
+    targetPort: 8080
+  route:
+    enabled: true
+YAML
+```
+
+> ⚠️ **Set `persistence.storageClassName`** to a StorageClass that exists in your
+> cluster (`oc get storageclass`). If left empty, the cluster default is used; if
+> there is no default, the PVC stays `Pending` and the pod won't start.
+
+### A.3 — Access it
+
+```bash
+oc get route -n seawise-app seawise-dashboard -o jsonpath='{.spec.host}'; echo
+```
+
+> 🔐 Default login is `admin` / `admin123` — **change the password on first login.**
+
+To upgrade later, the Operator handles it automatically when a new version is
+published. To remove: delete the `Seawise` instance, then uninstall the Operator.
+
+---
+
+## 🎯 Option B: Install via Helm (3 Steps)
+
+Prefer Helm (no Operator)? Follow the steps below.
 
 ### Step 2: Create Configuration File
 
