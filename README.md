@@ -17,6 +17,7 @@
 
 - ✅ Complete backup & restore management
 - ✅ Multi-platform: Kubernetes, Rancher, OpenShift
+- ✅ Red Hat Certified Operator — install from OpenShift OperatorHub
 - ✅ Scheduled backups (cron policies)
 - ✅ Volume backup with automatic pod annotation
 - ✅ Multi-cloud support (AWS, Azure, GCP)
@@ -61,6 +62,13 @@ helm upgrade --install seawise-dashboard \
 ```
 
 ### OpenShift
+
+> 💡 **On OpenShift, the easiest path is the Operator.** Seawise is a Red Hat
+> Certified Operator: go to **Operators → OperatorHub**, search for
+> **Seawise Backup Dashboard**, install it, and create a `Seawise` instance.
+> See [OPENSHIFT-INSTALL.md](OPENSHIFT-INSTALL.md) for the Operator guide.
+> Prefer Helm? Use the command below.
+
 ```bash
 export CHART_VERSION=1.7.1
 export STORAGE_CLASS=nfs-storage-class  # CHANGE: check with: oc get storageclass
